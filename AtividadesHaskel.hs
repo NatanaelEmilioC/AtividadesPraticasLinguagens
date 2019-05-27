@@ -19,22 +19,26 @@ sel a b c
 -- max2 retorn o maior valor entre dos dois valores
 -- Utilize sel para resolver esse problema
 max2 :: Int -> Int -> Int
-max2 = undefined
+max2 x y = sel(x>y) x y
 
 -- max2' retorn o maior valor entre dos dois valores
 -- Não sel para resolver esse problema
 max2' :: Int -> Int -> Int
-max2' = undefined
+max2' x y
+    | x > y = x
+    |otherwise = y
 
 -- max3 retorn o maior valor entre dos três valores
 -- Utilize max2 ou max2' para resolver esse problema
 max3 :: Int -> Int -> Int -> Int
-max3 = undefined
+max3 x y z = max2 x $ max2 y z
 
 -- m recebe um inteiro e, caso seja maior que 100, retorna n-10,
 -- caso contrário então retorna m (m (n+11))
 m :: Int -> Int
-m = undefined
+m n 
+    | n > 100 = n-10
+    | otherwise = m $ m $ n+11
 -- Qual valor esta função retorna para valores de entrada positivos
 -- menores que 101?
 
@@ -42,7 +46,12 @@ m = undefined
 -- lista de dígitos correspondente ao número
 -- -- num2digits 4721 => [4,7,2,1]
 num2digits :: Int -> [Int]
---num2digits n = map (mod 10) . reverse . takeWhile ( > 0 )
+num2digits x
+    | num == 0 = [x]
+    | otherwise = num2digits num ++ [res]
+    where
+        num = x `div` 10
+        res = x `mod` 10
 
 -- Um número é dito chic se o digito resultante da soma de seus dígitos
 -- ocorre no número. Se o resultado da soma dos dígitos for um número
@@ -51,14 +60,14 @@ num2digits :: Int -> [Int]
 -- -- 1276 é chic, pois 1+2+7+6 = 16, 1+6 = 7.
 -- -- 123 não é chic, 1+2+3 = 6
 chic :: Int -> Bool
---chic x = elem s num
---    where
---        num = num2digits x
---        s = sumLoop x
---        sumLoop :: Int -> Int
---        sumLoop x
---            |x mod 10 == 0 = x
---            |otherwise = sumLoop $ sum $ num2digits x
+chic x = elem s num
+    where
+        num = num2digits x
+        s = sumLoop x
+        sumLoop :: Int -> Int
+        sumLoop x
+            |x `mod` 10 == 0 = x
+            |otherwise = sumLoop $ sum $ num2digits x
 
 -----------------------------------------------------------------------------------------
 -- Tipos de dados - Intro
@@ -71,21 +80,23 @@ chic :: Int -> Bool
 
 -- -- multf que recebe duas frações e faz a sua multiplicação
 multf :: (Int, Int) -> (Int, Int) -> (Int, Int)
-multf = undefined
+multf (a, b) (c, d) = (a*c,b*d)
 
 -- -- somaf que recebe duas frações e faz a sua soma
 somaf :: (Int, Int) -> (Int, Int) -> (Int, Int)
-somaf = undefined
+somaf (a, b) (c, d) = ((a*d)+(b*c),b*d)
 
 -- -- subf que recebe duas frações e faz a sua subtração
 subf :: (Int, Int) -> (Int, Int) -> (Int, Int)
-subf = undefined
+subf (a, b) (c, d) = ((a*d)-(b*c),b*d)
 
 
 -- -- divf que recebe duas frações e faz a sua divisão
 divf :: (Int, Int) -> (Int, Int) -> (Int, Int)
-divf = undefined
+divf (a, b) (c, d) = (a*d,b*c)
 
 -- -- toReal que tranforma a fração em um valor real
 toReal :: (Int, Int) -> Float
-toReal = undefined
+toReal (x, y) = a / b
+    where   a = fromIntegral x :: Float 
+            b = fromIntegral y :: Float
