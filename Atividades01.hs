@@ -1,4 +1,4 @@
-module Atividades where
+module Atividades01 where
 
 -- double recebe um inteiro e retorna o seu valor duas vezes maior
 double :: Int -> Int
