@@ -17,7 +17,7 @@ notTerm b
     | otherwise = (b + 1) `mod` 2
 
 xorTerm :: Int -> Int -> Int
-xorTerm a b = andTerm (notTerm $ andTerm a b) $ orTerm a b  
+xorTerm a b = orTerm (andTerm b $ notTerm a) $ andTerm a $notTerm b  
 
 gcd1 :: Int -> Int -> Int
 gcd1 a b
@@ -27,5 +27,6 @@ gcd1 a b
 lcm1 :: Int -> Int -> Int
 lcm1 a b = div (a*b) $ gcd1 a b
 
+-- a é a variável de precisão
 cosA :: Double -> Double -> Double
 cosA a b = undefined
