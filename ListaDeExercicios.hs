@@ -10,11 +10,12 @@ type Bit = Int
 
 int2bit :: Int -> [Bit]
 int2bit 0 = []
-int2bit x = x `mod` 2 : int2bit (x `div` 2)
+int2bit x = reverse $ x `mod` 2 : int2bit (x `div` 2)
 
 --b)
 bit2int :: [Bit] -> Int
-bit2int xs = sum [ x * y | (x, y) <- zip tamanho xs] where tamanho = iterate (*2) 1
+bit2int [] = 0
+bit2int (x:xs) = (x * 2 ^(length xs)) + bit2int xs
 
 --3 Crie um tipo de dados que represente uma fórmula, sendo uma fórmula sendo:
 --Verdadeiro
@@ -52,7 +53,7 @@ allEven xs = [ x | x <- xs, x `mod` 2 == 0 ]
 
 --b) recebe uma lista de listas e retorna com o tamanho desse lista e a lista correspondente.
 lengths :: [[a]] -> [(Int, [a])]
-lengths xs = [(length x, x) | x <- xs]
+lengths xs = [( y , x ) | x <- xs , let y = length x ]
 
 --c) que recebe duas lista e faz todas as combinações possíveis das duas listas
 combinacao :: [a] -> [b] -> [(a, b)]
@@ -66,7 +67,8 @@ divisor x = [ y | y <- [1..(x `div` 2)] , x `mod` y == 0 ]
 --e a lista mais externa é uma combinação de ous, dena a função avalia :: [[Bool]] -> Bool que
 --transforma a lista de lista em um único valor de verdadeiro ou falso.
 --Exemplo: (V e F e V) ou V ou (F e F) = [[True, False, True], [True], [False, False]]
-
+avalia :: [[Bool]] -> Bool
+avalia x = undefined
 
 --6. Dado as questões 3 e 5 dena as funções:
 --(a) for2lst :: Formula -> [[Bool]] que transforma uma formula em uma lista de lista de booleano.
@@ -79,6 +81,9 @@ lst2for = undefined
 -}
 --7 Dena a func~ao iteracao :: (a -> a) -> a -> [a] que cria uma lista innita de aplicac~ao de func~ao.
 --iteracao f a = f a : f (f a) : f (f (f a)) : :::
+iteracao :: (a -> a) -> a -> [a]
+iteracao f x = x : iteracao f (f x)
+
 
 --8. Utilizando somente func~ao de alta ordem (foldr, filter, (+3), etc), dena as seguinte func~oes:
 --(a) replace :: Eq a ) a -> a -> [a] -> [a] que dado o primeiro e segundo par^ametro, troca onde tiver 
@@ -88,11 +93,11 @@ replace = undefined
 
 --(b) int2bit0 :: Int -> [Bit]
 int2bit0 :: Int -> [Bit]
-int2bit0 = undefined
+int2bit0 x = iterate(`mod` 2) x
 
 --(c) allEven0 :: [Int] => [Int]
 allEven0 :: [Int] -> [Int]
-allEven0 = undefined
+allEven0 xs = filter(even) xs
 
 --(d) avalia0 :: [[Bool]] -> Bool
 avalia0 :: [[Bool]] -> Bool
@@ -100,4 +105,4 @@ avalia0 = undefined
 
 --(e) soma :: [Int] -> Int, que dado uma lista de inteiros, retorna a soma de todos os elementos
 soma :: [Int] -> Int
-soma = undefined
+soma xs = last $ scanl1 (+) xs
