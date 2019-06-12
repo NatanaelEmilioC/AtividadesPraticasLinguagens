@@ -4,18 +4,24 @@ import Data.Bits
 repetir :: a -> [a]
 repetir a = as where as = a:as
 
+
 --2
 --a)
-type Bit = Int
+data Bit = Zero | Um deriving (Show, Eq)
 
 int2bit :: Int -> [Bit]
 int2bit 0 = []
-int2bit x = reverse $ x `mod` 2 : int2bit (x `div` 2)
+int2bit x
+    |x `mod` 2 == 1 = int2bit (x `div` 2) ++ [Um]
+    |otherwise = int2bit (x `div` 2) ++ [Zero] 
+
 
 --b)
 bit2int :: [Bit] -> Int
 bit2int [] = 0
-bit2int (x:xs) = (x * 2 ^(length xs)) + bit2int xs
+bit2int (x:xs)
+    | x == Zero = (0 * 2 ^(length xs)) + bit2int xs
+    | otherwise = (1 * 2 ^(length xs)) + bit2int xs
 
 --3 Crie um tipo de dados que represente uma fórmula, sendo uma fórmula sendo:
 --Verdadeiro
@@ -25,27 +31,20 @@ bit2int (x:xs) = (x * 2 ^(length xs)) + bit2int xs
 --Não necessário uma fórmula
 --Dado que foi criado o tipo de dado Fórmula, dena a função eval :: Formula -> Bool que recebevuma fórmula e a avalia.
 
-{-
-data Term t (deriving Eq) where
-    Con         ::          a               -> Term a
-    Não         ::      Term Bool           -> Term Bool
-    E           ::      Term Bool           -> Term Bool    -> Term Bool 
-    Ou          ::      Term Bool           -> Term Bool    -> Term Bool 
-    Verdadeiro  ::      Term Bool           -> Term Bool
-    Falso       ::      Term Bool           -> Term Bool
+data Formula = V
+                | F
+                | E Formula Formula
+                | Nao Formula
+                | Ou Formula Formula 
+            deriving Show 
 
-data Formula ts where
-Body   :: Term Bool -> Formula ()
-Forall :: Show a => [a] -> (Term a -> Formula as) -> Formula (a, as)
-
-eval :: Term t -> t
-eval (Con i) = i
-eval (E p q)  = eval p && eval q
+eval :: Formula -> Bool
+eval (V) = True
+eval (F) = False
+eval (E p q) = eval p && eval q
 eval (Ou p q) = eval p || eval q
-eval (Não q) = not(eval q)
---eval(Smaller n m)=eval n < eval m
---eval (Plus n m)    = eval n + eval m
--}
+eval (Nao q) = not(eval q)
+
 --4 Utilizando somente compressão de lista - List Comprehension - dena as seguintes funções:
 --a)que recebe uma lista e retorna um lista somente com números inteiros.
 allEven :: [Int] -> [Int]
@@ -91,9 +90,12 @@ iteracao f x = x : iteracao f (f x)
 replace :: a -> a -> [a] -> [a]
 replace = undefined
 
---(b) int2bit0 :: Int -> [Bit]
+{--(b) int2bit0 :: Int -> [Bit]
 int2bit0 :: Int -> [Bit]
-int2bit0 x = iterate(`mod` 2) x
+int2bit0 0 = []
+int2bit0 x = y : int2bit0 (x `div` 2)
+    where y = x `mod` 2
+--}
 
 --(c) allEven0 :: [Int] => [Int]
 allEven0 :: [Int] -> [Int]
