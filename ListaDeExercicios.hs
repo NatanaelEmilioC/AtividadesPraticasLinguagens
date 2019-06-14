@@ -71,13 +71,13 @@ avalia x = undefined
 
 --6. Dado as questões 3 e 5 dena as funções:
 --(a) for2lst :: Formula -> [[Bool]] que transforma uma formula em uma lista de lista de booleano.
-{-for2lst :: Formula -> [[Bool]]
+for2lst :: Formula -> [[Bool]]
 for2lst = undefined
 
 --(b) lst2for :: [[Bool]] -> Formula que transforma uma lista de lista de booleano em uma formula.
 lst2for :: [[Bool]] -> Formula
 lst2for = undefined 
--}
+
 --7 Dena a func~ao iteracao :: (a -> a) -> a -> [a] que cria uma lista innita de aplicac~ao de func~ao.
 --iteracao f a = f a : f (f a) : f (f (f a)) : :::
 iteracao :: (a -> a) -> a -> [a]
