@@ -90,12 +90,11 @@ iteracao f x = x : iteracao f (f x)
 replace :: a -> a -> [a] -> [a]
 replace = undefined
 
-{--(b) int2bit0 :: Int -> [Bit]
-int2bit0 :: Int -> [Bit]
-int2bit0 0 = []
-int2bit0 x = y : int2bit0 (x `div` 2)
-    where y = x `mod` 2
---}
+--(b) int2bit0 :: Int -> [Bit]
+int2bit0 :: Int -> [Int]
+int2bit0 0 = 0
+int2bit0 x = zip (x `rem` 2) (int2bit0 x `div` 2)
+ 
 
 --(c) allEven0 :: [Int] => [Int]
 allEven0 :: [Int] -> [Int]
