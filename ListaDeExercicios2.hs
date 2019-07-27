@@ -1,3 +1,8 @@
+{--
+Natanael Emilio da Costa
+Matricula 16.1.8298
+--}
+
 import Data.List
 
 --1)
